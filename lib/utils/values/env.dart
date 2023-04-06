@@ -14,9 +14,9 @@ class Env {
   static const appStoreLink = "https://apps.apple.com/us/app/starter/id";
 
   static const upComingMovieUrl =
-      "https://api.themoviedb.org/3/movie/upcoming?api_key=fa0c92af3ea4daf346aace070bc25bf8&language=en-US&page=1";
+      "https://api.themoviedb.org/3/movie/upcoming?api_key=909594533c98883408adef5d56143539&language=en-US&page=1";
   static const popularMovieUrl =
-      "https://api.themoviedb.org/3/movie/popular?api_key=fa0c92af3ea4daf346aace070bc25bf8&language=en-US&page=1";
+      "https://api.themoviedb.org/3/movie/popular?api_key=909594533c98883408adef5d56143539&language=en-US&page=1";
 
   static const movieTrailerUrl = "https://api.themoviedb.org/3/movie";
 }
