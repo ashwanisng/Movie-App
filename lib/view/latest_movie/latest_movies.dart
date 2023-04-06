@@ -8,8 +8,21 @@ import 'package:tmdb_movie/utils/widgets/movie_list.dart';
 import 'package:tmdb_movie/utils/widgets/suggested_movie.dart';
 import 'package:tmdb_movie/view_model/latest_movie_bloc/bloc/latest_movie_bloc.dart';
 
-class LatestMovies extends StatelessWidget {
+class LatestMovies extends StatefulWidget {
   const LatestMovies({super.key});
+
+  @override
+  State<LatestMovies> createState() => _LatestMoviesState();
+}
+
+class _LatestMoviesState extends State<LatestMovies> {
+  late LatestMovieBloc latestMovieBloc;
+
+  @override
+  void initState() {
+    latestMovieBloc = BlocProvider.of<LatestMovieBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +31,9 @@ class LatestMovies extends StatelessWidget {
 
     return SafeArea(
       child: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await latestMovieBloc.fetchData();
+        },
         child: Scaffold(
           backgroundColor: AppColors.primaryColor,
           appBar: customAppBar(context),

@@ -7,8 +7,21 @@ import 'package:tmdb_movie/utils/widgets/movie_list.dart';
 import 'package:tmdb_movie/utils/widgets/suggested_movie.dart';
 import 'package:tmdb_movie/view_model/popular_movie/bloc/popular_movie_bloc.dart';
 
-class PopularMovie extends StatelessWidget {
+class PopularMovie extends StatefulWidget {
   const PopularMovie({super.key});
+
+  @override
+  State<PopularMovie> createState() => _PopularMovieState();
+}
+
+class _PopularMovieState extends State<PopularMovie> {
+  late PopularMovieBloc popularMovieBloc;
+
+  @override
+  void initState() {
+    popularMovieBloc = BlocProvider.of<PopularMovieBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,37 +29,43 @@ class PopularMovie extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.primaryColor,
-        appBar: customAppBar(context),
-        body: BlocListener<PopularMovieBloc, PopularMovieState>(
-          // bloc: latestMovieBloc,
-          listener: (context, state) {
-            if (state is LoadingState) {}
-          },
-          child: BlocBuilder<PopularMovieBloc, PopularMovieState>(
+      child: RefreshIndicator(
+        onRefresh: () async {
+          await popularMovieBloc.fetchData();
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.primaryColor,
+          appBar: customAppBar(context),
+          body: BlocListener<PopularMovieBloc, PopularMovieState>(
             // bloc: latestMovieBloc,
-            builder: (context, state) {
-              if (state is LoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              if (state is LatestMoviesList) {
-                return ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    suggestMovie(size, state.moviesData![0], context),
-                    const SizedBox(height: 30),
-                    buildList(
-                        movieList: state.moviesData, orientation: orientation),
-                  ],
-                );
-              } else {
-                return errorWidget(size, context);
-              }
+            listener: (context, state) {
+              if (state is LoadingState) {}
             },
+            child: BlocBuilder<PopularMovieBloc, PopularMovieState>(
+              // bloc: latestMovieBloc,
+              builder: (context, state) {
+                if (state is LoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (state is LatestMoviesList) {
+                  return ListView(
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      suggestMovie(size, state.moviesData![0], context),
+                      const SizedBox(height: 30),
+                      buildList(
+                          movieList: state.moviesData,
+                          orientation: orientation),
+                    ],
+                  );
+                } else {
+                  return errorWidget(size, context);
+                }
+              },
+            ),
           ),
         ),
       ),

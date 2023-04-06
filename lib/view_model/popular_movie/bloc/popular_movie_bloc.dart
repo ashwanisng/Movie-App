@@ -19,13 +19,21 @@ class PopularMovieBloc extends Bloc<PopularMovieEvent, PopularMovieState> {
       PopularMoviesData event, Emitter<PopularMovieState> emit) async {
     emit(const LoadingState());
     try {
-      List<Movies>? data = await _movieRepository.getPopularMovies();
+      List<Movies>? data = await fetchData();
 
       if (data != null) {
         emit(LatestMoviesList(moviesData: data));
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  fetchData() async {
+    List<Movies>? data = await _movieRepository.getPopularMovies();
+
+    if (data != null) {
+      return data;
     }
   }
 }

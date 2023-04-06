@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:tmdb_movie/model/movie_repository.dart';
 import 'package:tmdb_movie/model/movie_response.dart';
-import 'package:tmdb_movie/view_model/latest_movie_bloc/bloc/latest_movie_bloc.dart';
 
 part 'search_movie_event.dart';
 part 'search_movie_state.dart';
