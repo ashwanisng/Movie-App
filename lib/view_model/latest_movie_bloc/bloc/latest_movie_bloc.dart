@@ -22,13 +22,20 @@ class LatestMovieBloc extends Bloc<LatestMovieEvent, LatestMovieState> {
       LoadMoviesData event, Emitter<LatestMovieState> emit) async {
     emit(LoadingState());
     try {
-      List<Movies>? data = await _movieRepository.getUpcomingMovies();
-
+      List<Movies>? data = await fetchData();
       if (data != null) {
         emit(LatestMoviesList(moviesData: data));
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  fetchData() async {
+    List<Movies>? data = await _movieRepository.getUpcomingMovies();
+
+    if (data != null) {
+      return data;
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tmdb_movie/utils/theme/app_colors.dart';
 
-import 'package:tmdb_movie/view/latest/latest_movies.dart';
-import 'package:tmdb_movie/view/popular/popular_movies.dart';
+import 'package:tmdb_movie/view/popular_movie/latest_movies.dart';
+import 'package:tmdb_movie/view/latest_movie/latest_movies.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -15,7 +15,7 @@ class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    PopularMovies(),
+    PopularMovie(),
     LatestMovies(),
   ];
 
